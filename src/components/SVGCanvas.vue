@@ -15,10 +15,10 @@ import 'svg.draggable.js'
 export default {
   props: ['shapes'],
   mounted: function () {
-    SVG.select('.shape').draggable()
+    SVG.select('.shapeGroup').draggable()
   },
   updated: function () {
-    SVG.select('.shape').draggable()
+    SVG.select('.shapeGroup').draggable()
   },
   methods: {
     selected: function (id) {
