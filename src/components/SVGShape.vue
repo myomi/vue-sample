@@ -7,6 +7,13 @@
       fill="white"
       :x="shape.x" :y="shape.y" :width="shape.width" :height="shape.height"
     />
+    <circle v-if="shape.type === 'circle'"
+      @click="selected"
+      :id="shape.id"
+      class="shape"
+      fill="white"
+      :cx="shape.x" :cy="shape.y" :r="shape.r"
+    />
     <text v-if="shape.type === 'text'"
       @click="selected"
       :id="shape.id"
@@ -40,11 +47,20 @@ export default {
         startY = e.detail.p.y
       })
       .on('dragend', function (e) {
+        let orgX, orgY
+        if (self.shape.type === 'circle') {
+          orgX = parseFloat(shape.getAttribute('cx'))
+          orgY = parseFloat(shape.getAttribute('cy'))
+        } else {
+          orgX = parseFloat(shape.getAttribute('x'))
+          orgY = parseFloat(shape.getAttribute('y'))
+        }
+
         // shapのの代わりにgタグをdraggableにしたせいで、移動後の座標計算が必要
         self.$emit('moved', {
           id: shape.getAttribute('id'),
-          x: parseFloat(shape.getAttribute('x')) + e.detail.p.x - startX,
-          y: parseFloat(shape.getAttribute('y')) + e.detail.p.y - startY
+          x: orgX + e.detail.p.x - startX,
+          y: orgY + e.detail.p.y - startY
         })
       })
   },

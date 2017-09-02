@@ -10,8 +10,9 @@
         @moved="moved"
         @unselected="unselected" />
       <div class="col-6">
-        <button class="btn btn-default" @click="addRect">Rect</button>
-        <button class="btn btn-default" @click="addText">Text</button>
+        <button class="btn btn-primary" @click="addRect">Rect</button>
+        <button class="btn btn-primary" @click="addCircle">Circle</button>
+        <button class="btn btn-primary" @click="addText">Text</button>
       </div>
     </div>
     <ModalAddText :display="displayModalAddText" @ok="addTextOk" @cancel="addTextCancel"/>
@@ -40,6 +41,16 @@ export default {
         y: 10,
         width: 100,
         height: 100,
+        selected: false
+      })
+    },
+    addCircle: function () {
+      this.shapes.push({
+        id: `shape${this.shapes.length}`,
+        type: 'circle',
+        x: 50,
+        y: 50,
+        r: 10,
         selected: false
       })
     },
