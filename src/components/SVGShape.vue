@@ -29,7 +29,30 @@ export default {
     'shape'
   ],
   mounted: function () {
-    SVG.adopt(this.$el).draggable()
+    let self = this
+    let shape = this.$el.querySelector('.shape')
+    let startX
+    let startY
+    // select中もドラッグ可能にするために、gタグをdraggableにする。
+    SVG.adopt(this.$el)
+      .draggable()
+      .on('dragstart', function (e) {
+        startX = e.detail.p.x
+        startY = e.detail.p.y
+      })
+      .on('dragend', function (e) {
+        // shapのの代わりにgタグをdraggableにしたせいで、移動後の座標計算が必要
+        self.$emit('moved', {
+          id: shape.getAttribute('id'),
+          x: parseFloat(shape.getAttribute('x')) + e.detail.p.x - startX,
+          y: parseFloat(shape.getAttribute('y')) + e.detail.p.y - startY
+        })
+      })
+  },
+  updated: function () {
+    // gタグをdraggablににした場合、x,y座標ではなくgタグのtransformが変更される
+    // モデルの座をを更新したらgタののtransform属性を消去しないとmoveが2倍うごいてしまう
+    this.$el.removeAttribute('transform')
   },
   methods: {
     selected: function (e) {
@@ -40,10 +63,13 @@ export default {
   },
   watch: {
     'shape.selected': function (val, oldVal) {
+      let shape = this.$el.querySelector('.shape')
       if (val) {
-        SVG.adopt(this.$el.querySelector('.shape')).selectize().resize()
+        SVG.adopt(shape)
+          .selectize()
+          .resize()
       } else {
-        SVG.adopt(this.$el.querySelector('.shape')).selectize(false).resize('stop')
+        SVG.adopt(shape).selectize(false).resize('stop')
       }
     }
   }

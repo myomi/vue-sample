@@ -4,7 +4,11 @@
       <h1>SVG Editor</h1>
     </div>
     <div class="row">
-      <SVGCanvas :shapes="shapes" @selected="selected" @unselected="unselected" class="col-6"/>
+      <SVGCanvas class="col-6"
+        :shapes="shapes"
+        @selected="selected"
+        @moved="moved"
+        @unselected="unselected" />
       <div class="col-6">
         <button class="btn btn-default" @click="addRect">Rect</button>
         <button class="btn btn-default" @click="addText">Text</button>
@@ -68,6 +72,11 @@ export default {
       this.shapes.forEach(e => {
         e.selected = (e.id === id)
       })
+    },
+    moved: function (pos) {
+      var shape = this.shapes.find(e => e.id === pos.id)
+      shape.x = pos.x
+      shape.y = pos.y
     }
   },
   components: {

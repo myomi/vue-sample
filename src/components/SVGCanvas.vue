@@ -3,7 +3,8 @@
       width="400" height="400">
       <SVGShape v-for="s in shapes" :key="s.id"
         :shape="s"
-        @selected="selected"/>
+        @selected="selected"
+        @moved="moved"/>
     </svg>
 </template>
 
@@ -15,6 +16,9 @@ export default {
   methods: {
     selected: function (id) {
       this.$emit('selected', id)
+    },
+    moved: function (pos) {
+      this.$emit('moved', pos)
     },
     unselected: function (e) {
       this.$emit('unselected')
