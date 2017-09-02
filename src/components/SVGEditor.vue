@@ -48,7 +48,8 @@ export default {
           x: 10,
           y: 50,
           fontSize: 24,
-          text: text
+          text: text,
+          selected: false
         })
       }
     },
