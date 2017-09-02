@@ -29,8 +29,10 @@ export default {
   props: [
     'display'
   ],
-  data: {
-    text: null
+  data: function () {
+    return {
+      text: null
+    }
   },
   mounted: function () {
     $(this.$el).modal({
