@@ -8,7 +8,7 @@
         <div class="modal-body">
           <form>
             <div class="form-group">
-              <input type="text" class="form-control" v-model="text">
+              <input type="text" class="form-control" v-model="text" id="ModalAddTextInput">
             </div>
           </form>
         </div>
@@ -37,6 +37,8 @@ export default {
   mounted: function () {
     $(this.$el).modal({
       show: false
+    }).on('shown.bs.modal', function () {
+      $('#ModalAddTextInput').focus()
     })
   },
   watch: {
