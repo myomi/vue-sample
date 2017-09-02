@@ -4,7 +4,6 @@
       @click="selected"
       :id="shape.id"
       class="shape"
-      :class="{ isSelected: shape.selected }"
       fill="white"
       :x="shape.x" :y="shape.y" :width="shape.width" :height="shape.height"
     />
@@ -12,7 +11,6 @@
       @click="selected"
       :id="shape.id"
       class="shape"
-      :class="{ isSelected: shape.selected }"
       :x="shape.x" :y="shape.y" :font-size="shape.fontSize">{{shape.text}}
     </text>
   </g>
@@ -33,6 +31,7 @@ export default {
     let shape = this.$el.querySelector('.shape')
     let startX
     let startY
+    // shapeをdraggableにした場合、select中はdragできなかった。
     // select中もドラッグ可能にするために、gタグをdraggableにする。
     SVG.adopt(this.$el)
       .draggable()
@@ -55,6 +54,10 @@ export default {
     this.$el.removeAttribute('transform')
   },
   methods: {
+    /**
+     * Shapeが選択されたとき
+     * @argument e イベント
+     */
     selected: function (e) {
       this.target = e.target
       this.$emit('selected', e.target.id)
