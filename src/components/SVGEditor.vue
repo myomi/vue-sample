@@ -1,6 +1,9 @@
 <template>
   <div class="container">
     <div class="row">
+      <h1>SVG Editor</h1>
+    </div>
+    <div class="row">
       <SVGCanvas :shapes="shapes" @selected="selected" @unselected="unselected" class="col-6"/>
       <div class="col-6">
         <button class="btn btn-default" @click="addRect">Rect</button>

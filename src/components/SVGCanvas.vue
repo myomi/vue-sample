@@ -9,17 +9,9 @@
 
 <script>
 import SVGShape from './SVGShape'
-import SVG from 'svg.js'
-import 'svg.draggable.js'
 
 export default {
   props: ['shapes'],
-  mounted: function () {
-    SVG.select('.shapeGroup').draggable()
-  },
-  updated: function () {
-    SVG.select('.shapeGroup').draggable()
-  },
   methods: {
     selected: function (id) {
       this.$emit('selected', id)
