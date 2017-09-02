@@ -83,12 +83,39 @@ export default {
   watch: {
     'shape.selected': function (val, oldVal) {
       let shape = this.$el.querySelector('.shape')
+      let self = this
       if (val) {
         SVG.adopt(shape)
           .selectize()
           .resize()
+          .on('resizedone', function (e) {
+            let x, y, width, height, fontSize, r
+            if (self.shape.type === 'text') {
+              x = parseFloat(shape.getAttribute('x'))
+              y = parseFloat(shape.getAttribute('y'))
+              fontSize = parseFloat(shape.getAttribute('font-size'))
+            } else if (self.shape.type === 'rect') {
+              x = parseFloat(shape.getAttribute('x'))
+              y = parseFloat(shape.getAttribute('y'))
+              width = parseFloat(shape.getAttribute('width'))
+              height = parseFloat(shape.getAttribute('height'))
+            } else if (self.shape.type === 'circle') {
+              x = parseFloat(shape.getAttribute('cx'))
+              y = parseFloat(shape.getAttribute('cy'))
+              r = parseFloat(shape.getAttribute('r'))
+            }
+            self.$emit('resized', {
+              id: shape.getAttribute('id'),
+              x: x,
+              y: y,
+              width: width,
+              height: height,
+              r: r,
+              fontSize: fontSize
+            })
+          })
       } else {
-        SVG.adopt(shape).selectize(false).resize('stop')
+        SVG.adopt(shape).selectize(false).resize('stop').off('resizedone')
       }
     }
   }

@@ -8,7 +8,9 @@
         :shapes="shapes"
         @selected="selected"
         @moved="moved"
-        @unselected="unselected" />
+        @resized="resized"
+        @unselected="unselected"
+      />
       <div class="col-2">
         <div class="btn-group-vertical">
           <button class="btn btn-primary" @click="addRect">Rect</button>
@@ -20,7 +22,6 @@
     <ModalAddText :display="displayModalAddText" @ok="addTextOk" @cancel="addTextCancel"/>
   </div>
 </template>
-
 
 <script>
 import SVGCanvas from './SVGCanvas'
@@ -90,6 +91,19 @@ export default {
       var shape = this.shapes.find(e => e.id === pos.id)
       shape.x = pos.x
       shape.y = pos.y
+    },
+    resized: function (pos) {
+      var shape = this.shapes.find(e => e.id === pos.id)
+      shape.x = pos.x
+      shape.y = pos.y
+      if (shape.type === 'circle') {
+        shape.r = pos.r
+      } else if (shape.type === 'text') {
+        shape.fontSize = pos.fontSize
+      } else if (shape.type === 'rect') {
+        shape.width = pos.width
+        shape.height = pos.height
+      }
     }
   },
   components: {
