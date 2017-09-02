@@ -4,15 +4,17 @@
       <h1>SVG Editor</h1>
     </div>
     <div class="row">
-      <SVGCanvas class="col-6"
+      <SVGCanvas class="col-10"
         :shapes="shapes"
         @selected="selected"
         @moved="moved"
         @unselected="unselected" />
-      <div class="col-6">
-        <button class="btn btn-primary" @click="addRect">Rect</button>
-        <button class="btn btn-primary" @click="addCircle">Circle</button>
-        <button class="btn btn-primary" @click="addText">Text</button>
+      <div class="col-2">
+        <div class="btn-group-vertical">
+          <button class="btn btn-primary" @click="addRect">Rect</button>
+          <button class="btn btn-primary" @click="addCircle">Circle</button>
+          <button class="btn btn-primary" @click="addText">Text</button>
+        </div>
       </div>
     </div>
     <ModalAddText :display="displayModalAddText" @ok="addTextOk" @cancel="addTextCancel"/>
@@ -48,9 +50,9 @@ export default {
       this.shapes.push({
         id: `shape${this.shapes.length}`,
         type: 'circle',
-        x: 50,
-        y: 50,
-        r: 10,
+        x: 100,
+        y: 100,
+        r: 100,
         selected: false
       })
     },
