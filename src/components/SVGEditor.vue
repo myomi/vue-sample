@@ -10,12 +10,20 @@
         @moved="moved"
         @resized="resized"
         @unselected="unselected"
+        @dropped="dropped"
       />
       <div class="col-2">
-        <div class="btn-group-vertical">
-          <button class="btn btn-primary" @click="addRect">Rect</button>
-          <button class="btn btn-primary" @click="addCircle">Circle</button>
-          <button class="btn btn-primary" @click="addText">Text</button>
+        <div class="row">
+          <div class="btn-group">
+            <button class="btn btn-primary" @click="addRect">Rect</button>
+            <button class="btn btn-primary" @click="addCircle">Circle</button>
+            <button class="btn btn-primary" @click="addText">Text</button>
+          </div>
+        </div>
+        <div class="row">
+          <ImageCabinet
+            :images="images"
+          />
         </div>
       </div>
     </div>
@@ -26,11 +34,18 @@
 <script>
 import SVGCanvas from './SVGCanvas'
 import ModalAddText from './ModalAddText'
+import ImageCabinet from './ImageCabinet'
+import cat from '../assets/cat.jpg'
+import dog from '../assets/dog.jpg'
 
 export default {
   data: function () {
     return {
       shapes: [
+      ],
+      images: [
+        cat,
+        dog
       ],
       displayModalAddText: false
     }
@@ -104,11 +119,23 @@ export default {
         shape.width = pos.width
         shape.height = pos.height
       }
+    },
+    dropped: function (imagePath) {
+      this.shapes.push({
+        id: `shape${this.shapes.length}`,
+        type: 'image',
+        x: 10,
+        y: 50,
+        width: 300,
+        path: imagePath,
+        selected: false
+      })
     }
   },
   components: {
     SVGCanvas,
-    ModalAddText
+    ModalAddText,
+    ImageCabinet
   }
 }
 </script>

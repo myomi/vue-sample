@@ -1,6 +1,10 @@
 <template>
-    <svg @click="unselected"
-      width="400" height="400">
+    <svg xmlns:xlink="http://www.w3.org/1999/xlink"
+      @click="unselected"
+      width="400" height="400"
+      @dragover="dragover"
+      @drop="drop"
+    >
       <SVGShape v-for="s in shapes" :key="s.id"
         :shape="s"
         @selected="selected"
@@ -27,6 +31,16 @@ export default {
     },
     unselected: function (e) {
       this.$emit('unselected')
+    },
+    dragover: function (e) {
+      e.preventDefault()
+    },
+    drop: function (e) {
+      e.preventDefault()
+      let imagePath = e.dataTransfer.getData('imagePath')
+      if (imagePath) {
+        this.$emit('dropped', imagePath)
+      }
     }
   },
   components: {

@@ -20,6 +20,13 @@
       class="shape"
       :x="shape.x" :y="shape.y" :font-size="shape.fontSize">{{shape.text}}
     </text>
+    <image v-if="shape.type === 'image'"
+      @click="selected"
+      :id="shape.id"
+      class="shape"
+      :x="shape.x" :y="shape.y" :width="shape.width" :height="shape.height"
+      :xlink:href="shape.path"
+    />
   </g>
 </template>
 
@@ -103,6 +110,11 @@ export default {
               x = parseFloat(shape.getAttribute('cx'))
               y = parseFloat(shape.getAttribute('cy'))
               r = parseFloat(shape.getAttribute('r'))
+            } else if (self.shape.type === 'image') {
+              x = parseFloat(shape.getAttribute('x'))
+              y = parseFloat(shape.getAttribute('y'))
+              width = parseFloat(shape.getAttribute('width'))
+              height = parseFloat(shape.getAttribute('height'))
             }
             self.$emit('resized', {
               id: shape.getAttribute('id'),
