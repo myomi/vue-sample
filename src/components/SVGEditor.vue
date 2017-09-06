@@ -103,12 +103,12 @@ export default {
       })
     },
     moved: function (pos) {
-      var shape = this.shapes.find(e => e.id === pos.id)
+      var shape = Array.find(this.shapes, e => e.id === pos.id)
       shape.x = pos.x
       shape.y = pos.y
     },
     resized: function (pos) {
-      var shape = this.shapes.find(e => e.id === pos.id)
+      var shape = Array.find(this.shapes, e => e.id === pos.id)
       shape.x = pos.x
       shape.y = pos.y
       if (shape.type === 'circle') {
@@ -121,12 +121,14 @@ export default {
       }
     },
     dropped: function (imagePath) {
+      alert(imagePath)
       this.shapes.push({
         id: `shape${this.shapes.length}`,
         type: 'image',
         x: 10,
         y: 50,
         width: 300,
+        height: 200,
         path: imagePath,
         selected: false
       })

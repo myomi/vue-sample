@@ -20,7 +20,7 @@ export default {
   ],
   methods: {
     dragstart: function (imagePath, e) {
-      e.dataTransfer.setData('imagePath', imagePath)
+      e.dataTransfer.setData('text', imagePath)
     }
   }
 }

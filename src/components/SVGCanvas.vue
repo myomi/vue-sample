@@ -37,7 +37,7 @@ export default {
     },
     drop: function (e) {
       e.preventDefault()
-      let imagePath = e.dataTransfer.getData('imagePath')
+      let imagePath = e.dataTransfer.getData('text')
       if (imagePath) {
         this.$emit('dropped', imagePath)
       }
