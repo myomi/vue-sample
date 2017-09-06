@@ -121,7 +121,6 @@ export default {
       }
     },
     dropped: function (imagePath) {
-      alert(imagePath)
       this.shapes.push({
         id: `shape${this.shapes.length}`,
         type: 'image',
