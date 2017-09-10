@@ -19,6 +19,7 @@
             <button class="btn btn-primary" @click="addCircle">Circle</button>
             <button class="btn btn-primary" @click="addText">Text</button>
             <button class="btn btn-danger" @click="deleteShape" :disabled="!this.shapes.some(e => e.selected)">Delete</button>
+            <button class="btn btn-secondary" @click="loadXml">Load XML</button>
           </div>
         </div>
         <div class="row">
@@ -33,6 +34,7 @@
 </template>
 
 <script>
+import X2JS from 'x2js'
 import SVGCanvas from './SVGCanvas'
 import ModalAddText from './ModalAddText'
 import ImageCabinet from './ImageCabinet'
@@ -97,6 +99,21 @@ export default {
       this.shapes.some((e, i) => {
         if (e.selected) this.shapes.splice(i, 1)
       })
+    },
+    loadXml: function () {
+      let x2js = new X2JS()
+      let xmlText =
+      `<info>
+        <type>rect</type>
+        <x>200</x>
+        <y>150</y>
+        <width>15</width>
+        <height>30</height>
+      </info>`
+      let json = x2js.xml2js(xmlText).info
+      json.id = `shape${this.shapes.length}`
+      json.selected = false
+      this.shapes.push(json)
     },
     unselected: function () {
       this.shapes.forEach(e => {
