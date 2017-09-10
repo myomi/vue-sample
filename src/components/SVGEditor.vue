@@ -18,6 +18,7 @@
             <button class="btn btn-primary" @click="addRect">Rect</button>
             <button class="btn btn-primary" @click="addCircle">Circle</button>
             <button class="btn btn-primary" @click="addText">Text</button>
+            <button class="btn btn-danger" @click="deleteShape" :disabled="!this.shapes.some(e => e.selected)">Delete</button>
           </div>
         </div>
         <div class="row">
@@ -91,6 +92,11 @@ export default {
     },
     addTextCancel: function () {
       this.displayModalAddText = false
+    },
+    deleteShape: function () {
+      this.shapes.some((e, i) => {
+        if (e.selected) this.shapes.splice(i, 1)
+      })
     },
     unselected: function () {
       this.shapes.forEach(e => {
