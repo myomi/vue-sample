@@ -21,6 +21,8 @@
             <button class="btn btn-danger" @click="deleteShape" :disabled="!this.shapes.some(e => e.selected)">Delete</button>
             <button class="btn btn-secondary" @click="loadXml">Load XML</button>
             <button class="btn btn-secondary" @click="writeXml">Write XML</button>
+            <button class="btn btn-info" @click="up" :disabled="!this.shapes.some(e => e.selected)">UP</button>
+            <button class="btn btn-info" @click="down" :disabled="!this.shapes.some(e => e.selected)">DOWN</button>
           </div>
         </div>
         <div class="row">
@@ -137,6 +139,33 @@ export default {
       })
       alert(xml)
     },
+    up: function () {
+      if (this.shapes.length < 2) {
+        return
+      }
+      const selectedIndex = findSelectedIndex(this.shapes)
+      if (selectedIndex < 0 ||
+        selectedIndex + 1 === this.shapes.length) {
+        return
+      }
+
+      const target = this.shapes[selectedIndex]
+      const swapped = this.shapes[selectedIndex + 1]
+      this.shapes.splice(selectedIndex, 2, swapped, target)
+    },
+    down: function () {
+      if (this.shapes.length < 2) {
+        return
+      }
+      const selectedIndex = findSelectedIndex(this.shapes)
+      if (selectedIndex <= 0) {
+        return
+      }
+
+      const target = this.shapes[selectedIndex]
+      const swapped = this.shapes[selectedIndex - 1]
+      this.shapes.splice(selectedIndex - 1, 2, target, swapped)
+    },
     unselected: function () {
       this.shapes.forEach(e => {
         e.selected = false
@@ -183,5 +212,19 @@ export default {
     ModalAddText,
     ImageCabinet
   }
+}
+
+/**
+ * Array#findIndexがIEで使えないのじ自作した
+ */
+function findSelectedIndex (shapes) {
+  var index = -1
+  shapes.some(function (e, i) {
+    if (e.selected) {
+      index = i
+      return true
+    }
+  })
+  return index
 }
 </script>
