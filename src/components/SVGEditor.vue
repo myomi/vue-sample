@@ -20,6 +20,7 @@
             <button class="btn btn-primary" @click="addText">Text</button>
             <button class="btn btn-danger" @click="deleteShape" :disabled="!this.shapes.some(e => e.selected)">Delete</button>
             <button class="btn btn-secondary" @click="loadXml">Load XML</button>
+            <button class="btn btn-secondary" @click="writeXml">Write XML</button>
           </div>
         </div>
         <div class="row">
@@ -114,6 +115,15 @@ export default {
       json.id = `shape${this.shapes.length}`
       json.selected = false
       this.shapes.push(json)
+    },
+    writeXml: function () {
+      let x2js = new X2JS()
+      let xml = x2js.js2xml({
+        information: {
+          shape: this.shapes
+        }
+      })
+      alert(xml)
     },
     unselected: function () {
       this.shapes.forEach(e => {
