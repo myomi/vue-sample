@@ -185,6 +185,7 @@ export default {
       var shape = Array.find(this.shapes, e => e.id === pos.id)
       shape.x = pos.x
       shape.y = pos.y
+      shape.rotation = pos.rotation
       if (shape.type === 'circle') {
         shape.r = pos.r
       } else if (shape.type === 'text') {

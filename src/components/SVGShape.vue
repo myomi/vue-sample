@@ -70,11 +70,20 @@ export default {
           y: orgY + e.detail.p.y - startY
         })
       })
+
+    // 回転
+    shape.removeAttribute('transform')
+    SVG.adopt(shape).rotate(this.shape.rotation)
   },
   updated: function () {
     // gタグをdraggablににした場合、x,y座標ではなくgタグのtransformが変更される
     // モデルの座をを更新したらgタののtransform属性を消去しないとmoveが2倍うごいてしまう
     this.$el.removeAttribute('transform')
+
+    // 回転
+    let shape = this.$el.querySelector('.shape')
+    shape.removeAttribute('transform')
+    SVG.adopt(shape).rotate(this.shape.rotation)
   },
   methods: {
     /**
@@ -88,6 +97,12 @@ export default {
     }
   },
   watch: {
+    'shape.rotation': function (val, oldVal) {
+      // 回転
+      let shape = this.$el.querySelector('.shape')
+      shape.removeAttribute('transform')
+      SVG.adopt(shape).rotate(this.shape.rotation)
+    },
     'shape.selected': function (val, oldVal) {
       let shape = this.$el.querySelector('.shape')
       let self = this
@@ -97,6 +112,7 @@ export default {
           .resize()
           .on('resizedone', function (e) {
             let x, y, width, height, fontSize, r
+            let rotation = SVG.adopt(shape).transform().rotation
             if (self.shape.type === 'text') {
               x = parseFloat(shape.getAttribute('x'))
               y = parseFloat(shape.getAttribute('y'))
@@ -123,7 +139,8 @@ export default {
               width: width,
               height: height,
               r: r,
-              fontSize: fontSize
+              fontSize: fontSize,
+              rotation: rotation
             })
           })
       } else {
