@@ -14,7 +14,7 @@
       />
       <div class="col-2">
         <div class="row">
-          <div class="btn-group">
+          <div class="btn-group-vertical">
             <button class="btn btn-primary" @click="addRect">Rect</button>
             <button class="btn btn-primary" @click="addCircle">Circle</button>
             <button class="btn btn-primary" @click="addText">Text</button>
@@ -23,6 +23,7 @@
             <button class="btn btn-secondary" @click="writeXml">Write XML</button>
             <button class="btn btn-info" @click="up" :disabled="!this.shapes.some(e => e.selected)">UP</button>
             <button class="btn btn-info" @click="down" :disabled="!this.shapes.some(e => e.selected)">DOWN</button>
+            <button class="btn btn-info" @click="callRestAPI">REST API</button>
           </div>
         </div>
         <div class="row">
@@ -37,6 +38,7 @@
 </template>
 
 <script>
+import $ from 'jquery'
 import X2JS from 'x2js'
 import SVGCanvas from './SVGCanvas'
 import ModalAddText from './ModalAddText'
@@ -168,6 +170,15 @@ export default {
       const target = this.shapes[selectedIndex]
       const swapped = this.shapes[selectedIndex - 1]
       this.shapes.splice(selectedIndex - 1, 2, target, swapped)
+    },
+    callRestAPI: function () {
+      $.ajax({
+        method: 'get',
+        url: 'http://localhost:8081/sample',
+        cache: false
+      }).done(data => {
+        alert(data.message)
+      })
     },
     unselected: function () {
       this.shapes.forEach(e => {

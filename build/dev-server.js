@@ -84,9 +84,21 @@ devMiddleware.waitUntilValid(() => {
 
 var server = app.listen(port)
 
+var api = express()
+api.get('/sample', (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+  var response = {
+    message: 'hello, ajax'
+  }
+  res.send(response)
+})
+api.listen(port + 1)
+
 module.exports = {
   ready: readyPromise,
   close: () => {
     server.close()
+    api.close()
   }
 }
