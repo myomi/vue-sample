@@ -114,6 +114,9 @@ export default {
       this.shapes.some((e, i) => {
         if (e.selected) this.shapes.splice(i, 1)
       })
+      this.shapes.forEach((e, i) => {
+        e.id = `shape${i}`
+      })
     },
     loadXml: function () {
       let x2js = new X2JS()
