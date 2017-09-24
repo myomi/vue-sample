@@ -54,6 +54,7 @@ export default {
         startY = e.detail.p.y
       })
       .on('dragend', function (e) {
+        let shape = self.$el.querySelector('.shape')
         let orgX, orgY
         if (self.shape.type === 'circle') {
           orgX = parseFloat(shape.getAttribute('cx'))
