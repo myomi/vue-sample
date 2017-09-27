@@ -233,6 +233,11 @@ export default {
       })
     }
   },
+  watch: {
+    'evaluation': function (newVal, oldVal) {
+      alert(`評価が変わりました${oldVal} -> ${newVal}`)
+    }
+  },
   components: {
     SVGCanvas,
     ModalAddText,
