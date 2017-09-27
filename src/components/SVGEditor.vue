@@ -31,6 +31,16 @@
             :images="images"
           />
         </div>
+        <div class="row">
+          <h4>アプリの評価</h4>
+          <label for="evalBad">悪い</label>
+          <input type="radio" v-model="evaluation" value="1" id="evalBad">
+          <label for="evalNormal">普通</label>
+          <input type="radio" v-model="evaluation" value="2" id="evalNormal">
+          <label for="evalGood">良い</label>
+          <input type="radio" v-model="evaluation" value="3" id="evalGood">
+          <p>あなたの評価は {{ evaluation }}</p>
+        </div>
       </div>
     </div>
     <ModalAddText :display="displayModalAddText" @ok="addTextOk" @cancel="addTextCancel"/>
@@ -55,7 +65,8 @@ export default {
         cat,
         dog
       ],
-      displayModalAddText: false
+      displayModalAddText: false,
+      evaluation: 3
     }
   },
   mounted: function () {
