@@ -32,6 +32,19 @@
           />
         </div>
         <div class="row">
+          <label for="openImage">
+            <span class="btn btn-primary">
+              画像を開く
+              <input type="file" id="openImage" class="openImage" @change="openImage">
+            </span>
+          </label>
+        </div>
+        <div class="row" v-for="(f, i) in uploadImages" :key="i">
+          <img width="200" height="200" :src="f.preview">
+          <button class="btn btn-danger" @click="uploadImage(f)">アップロード</button>
+        </div>
+
+        <div class="row">
           <h4>アプリの評価</h4>
           <p>
             <label for="evalBad">悪い</label>
@@ -67,6 +80,7 @@ export default {
         cat,
         dog
       ],
+      uploadImages: [],
       displayModalAddText: false,
       evaluation: 3
     }
@@ -233,6 +247,30 @@ export default {
         path: imagePath,
         selected: false
       })
+    },
+    openImage: function (event) {
+      const self = this
+      console.log(this)
+      Array.from(event.target.files).forEach(f => {
+        const fileInfo = {
+          file: f,
+          preview: window.URL.createObjectURL(f)
+        }
+        self.uploadImages.push(fileInfo)
+      })
+    },
+    uploadImage: function (file) {
+      console.log(file)
+      const form = new FormData()
+      form.append('file', file.file) // 'file'はAPIのキーに合わせる
+      console.log(file.file)
+      $.ajax({
+        method: 'post',
+        url: 'http://localhost:8081/upload',
+        data: form,
+        processData: false,
+        contentType: false
+      })
     }
   },
   watch: {
@@ -261,3 +299,9 @@ function findSelectedIndex (shapes) {
   return index
 }
 </script>
+
+<style lang="scss" scoped>
+.openImage {
+  display: none;
+}
+</style>

@@ -93,6 +93,9 @@ api.get('/sample', (req, res) => {
   }
   res.send(response)
 })
+api.post('/upload', (req, res) => {
+
+})
 api.listen(port + 1)
 
 module.exports = {
